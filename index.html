@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Літній квест — 9 клас 🌞</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400&family=Fraunces:ital,wght@0,700;0,900;1,700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lime:#C8F135; --teal:#0ABFBC; --orange:#FF7A1A;
+  --pink:#FF4D8B; --bg:#0E1117; --card:#161B26;
+  --border:rgba(255,255,255,0.08); --text:#F0EDE6;
+  --muted:rgba(240,237,230,0.5);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Nunito',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  text-align:center;padding:2rem;position:relative;overflow:hidden;
+  background:radial-gradient(ellipse at 15% 40%,rgba(200,241,53,.12) 0%,transparent 55%),
+  radial-gradient(ellipse at 85% 20%,rgba(255,122,26,.1) 0%,transparent 50%),
+  radial-gradient(ellipse at 50% 90%,rgba(10,191,188,.08) 0%,transparent 50%),var(--bg)}
+.blob{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none}
+.blob1{width:350px;height:350px;background:rgba(200,241,53,.08);top:-100px;right:-80px;animation:drift 8s ease-in-out infinite}
+.blob2{width:280px;height:280px;background:rgba(255,77,139,.07);bottom:-60px;left:-60px;animation:drift 10s ease-in-out infinite reverse}
+@keyframes drift{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(20px,20px) scale(1.05)}}
+
+.tag{display:inline-flex;align-items:center;gap:.5rem;background:rgba(200,241,53,.1);
+  border:1px solid rgba(200,241,53,.3);color:var(--lime);font-size:.72rem;font-weight:800;
+  letter-spacing:.18em;padding:.4rem 1.2rem;border-radius:50px;margin-bottom:1.5rem;
+  animation:fadeUp .7s ease both}
+.hero-title{font-family:'Fraunces',serif;font-size:clamp(2.8rem,8vw,6rem);font-weight:900;
+  line-height:1;letter-spacing:-.02em;animation:fadeUp .8s ease both}
+.hero-title .acc{color:var(--lime)}
+.hero-title .acc2{color:var(--orange);font-style:italic}
+.hero-sub{font-size:1.05rem;color:var(--muted);margin:1.2rem 0 2.5rem;max-width:480px;
+  line-height:1.7;animation:fadeUp .9s ease both}
+.hero-pills{display:flex;gap:.6rem;flex-wrap:wrap;justify-content:center;animation:fadeUp 1s ease both}
+.pill{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:50px;
+  padding:.35rem .9rem;font-size:.8rem;color:var(--muted)}
+.scroll-arrow{position:absolute;bottom:2rem;font-size:1.5rem;animation:bounce2 2s ease infinite;
+  color:rgba(255,255,255,.2)}
+@keyframes bounce2{0%,100%{transform:translateY(0)}50%{transform:translateY(8px)}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* PROGRESS BAR */
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--lime);
+  width:0%;transition:width .3s;z-index:999}
+
+/* NAV */
+.sidenav{position:fixed;right:1.2rem;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:.7rem;z-index:998}
+.sndot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.18);
+  border:none;cursor:pointer;transition:all .3s;padding:0}
+.sndot.on{background:var(--lime);box-shadow:0 0 8px var(--lime)}
+
+/* SECTIONS */
+.sec{min-height:100vh;padding:5rem 1.5rem;display:flex;flex-direction:column;
+  justify-content:center;max-width:860px;margin:0 auto}
+.stag{font-size:.68rem;font-weight:800;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:.7rem}
+h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,4.5vw,3rem);font-weight:900;
+  line-height:1.15;margin-bottom:1.2rem}
+h2 .hl{color:var(--orange)}
+h2 .hl2{color:var(--pink)}
+.lead{font-size:1rem;line-height:1.8;color:var(--muted);max-width:660px;margin-bottom:2rem}
+
+/* TEACHER BOX */
+.tbox{background:linear-gradient(135deg,rgba(255,122,26,.1),rgba(255,77,139,.06));
+  border-left:4px solid var(--orange);border-radius:0 16px 16px 0;padding:1.4rem 1.8rem;
+  margin:1.5rem 0;position:relative}
+.tbox::before{content:'✏️';position:absolute;top:1rem;right:1.2rem;font-size:1.4rem;opacity:.4}
+.tbox p{font-size:.95rem;line-height:1.75;color:rgba(240,237,230,.82);font-style:italic}
+.tbox .who{font-style:normal;font-size:.75rem;font-weight:800;color:var(--orange);
+  letter-spacing:.06em;margin-top:.7rem}
+
+/* PSY BOX */
+.pbox{background:linear-gradient(135deg,rgba(10,191,188,.1),rgba(10,191,188,.03));
+  border-left:4px solid var(--teal);border-radius:0 16px 16px 0;padding:1.4rem 1.8rem;
+  margin:1.5rem 0;position:relative}
+.pbox::before{content:'🧠';position:absolute;top:1rem;right:1.2rem;font-size:1.4rem;opacity:.4}
+.pbox p{font-size:.95rem;line-height:1.75;color:rgba(240,237,230,.82);font-style:italic}
+.pbox .who{font-style:normal;font-size:.75rem;font-weight:800;color:var(--teal);
+  letter-spacing:.06em;margin-top:.7rem}
+
+/* DIVIDER */
+.div{width:100%;max-width:860px;margin:0 auto;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.07),transparent)}
+
+/* CARDS */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:.9rem;margin-top:1.5rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:18px;
+  padding:1.4rem;transition:all .25s;cursor:default}
+.card:hover{transform:translateY(-4px);border-color:rgba(200,241,53,.25)}
+.card .ico{font-size:2rem;margin-bottom:.8rem}
+.card h3{font-size:.88rem;font-weight:800;margin-bottom:.4rem}
+.card p{font-size:.82rem;line-height:1.6;color:var(--muted)}
+
+/* ACTIVITY BOX */
+.abox{background:var(--card);border:1px solid rgba(200,241,53,.18);
+  border-radius:20px;padding:1.8rem;margin-top:1.8rem}
+.abox-title{font-size:.95rem;font-weight:800;color:var(--lime);margin-bottom:.4rem}
+.abox-desc{font-size:.85rem;color:var(--muted);margin-bottom:1.4rem;line-height:1.6}
+
+/* EMOJI SORT GAME */
+.esort-pool{display:flex;flex-wrap:wrap;gap:.6rem;margin-bottom:1.2rem;min-height:56px;
+  background:rgba(255,255,255,.03);border:1px dashed rgba(255,255,255,.1);
+  border-radius:14px;padding:.8rem}
+.esort-zones{display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem}
+.zone{border-radius:14px;padding:.8rem;min-height:80px;border:1px dashed var(--border)}
+.zone.good{background:rgba(200,241,53,.05);border-color:rgba(200,241,53,.3)}
+.zone.bad{background:rgba(255,77,139,.05);border-color:rgba(255,77,139,.3)}
+.zone-label{font-size:.75rem;font-weight:800;letter-spacing:.08em;margin-bottom:.5rem}
+.zone.good .zone-label{color:var(--lime)}
+.zone.bad .zone-label{color:var(--pink)}
+.zone-items{display:flex;flex-wrap:wrap;gap:.5rem;min-height:40px}
+.sort-item{background:rgba(255,255,255,.08);border:1px solid var(--border);border-radius:10px;
+  padding:.4rem .9rem;font-size:.88rem;cursor:grab;transition:all .2s;user-select:none}
+.sort-item:hover{background:rgba(255,255,255,.14);transform:scale(1.05)}
+.sort-item.placed{cursor:default}
+.sort-result{font-size:.9rem;font-weight:600;margin-top:.8rem;display:none;padding:.8rem 1rem;
+  border-radius:10px;line-height:1.6}
+.sort-result.show{display:block;background:rgba(200,241,53,.08);color:var(--lime);border:1px solid rgba(200,241,53,.2)}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.75rem 2rem;border-radius:50px;
+  font-family:'Nunito',sans-serif;font-size:.82rem;font-weight:800;letter-spacing:.05em;
+  cursor:pointer;border:none;transition:all .22s}
+.btn-lime{background:var(--lime);color:#0E1117}
+.btn-lime:hover{transform:scale(1.05);background:#d4f748}
+.btn-teal{background:transparent;border:1.5px solid var(--teal);color:var(--teal)}
+.btn-teal:hover{background:var(--teal);color:#0E1117}
+.btn-orange{background:var(--orange);color:#fff}
+.btn-orange:hover{transform:scale(1.04);background:#ff8f3a}
+.btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important}
+
+/* SUMMER MAP */
+.smap{display:flex;flex-direction:column;gap:.8rem;margin-top:1.5rem}
+.smap-month{background:var(--card);border:1px solid var(--border);border-radius:16px;
+  overflow:hidden}
+.smap-head{display:flex;align-items:center;gap:.8rem;padding:1rem 1.4rem;cursor:pointer;
+  transition:background .2s;font-weight:700}
+.smap-head:hover{background:rgba(255,255,255,.04)}
+.smap-head .mico{font-size:1.5rem}
+.smap-head .mname{font-size:.95rem;font-weight:800}
+.smap-head .mhint{font-size:.78rem;color:var(--muted);margin-left:auto}
+.smap-body{padding:0 1.4rem;max-height:0;overflow:hidden;transition:max-height .4s ease,padding .3s}
+.smap-body.open{max-height:600px;padding:1rem 1.4rem 1.4rem}
+.week-row{display:flex;gap:.5rem;align-items:center;margin:.4rem 0;font-size:.87rem}
+.week-badge{background:rgba(255,255,255,.07);border-radius:8px;padding:.25rem .7rem;
+  font-size:.75rem;font-weight:700;min-width:80px;text-align:center}
+.w-june{color:var(--lime)}
+.w-july{color:var(--orange)}
+.w-aug{color:var(--teal)}
+
+/* QUIZ */
+.qprog{font-size:.72rem;font-weight:800;color:var(--muted);letter-spacing:.12em;margin-bottom:1rem}
+.qq{font-size:1rem;font-weight:700;margin-bottom:1rem;line-height:1.5}
+.qopts{display:flex;flex-direction:column;gap:.55rem}
+.qopt{background:rgba(255,255,255,.05);border:1px solid var(--border);border-radius:13px;
+  padding:.85rem 1.2rem;cursor:pointer;font-size:.88rem;text-align:left;
+  color:var(--text);font-family:'Nunito',sans-serif;transition:all .2s}
+.qopt:hover{border-color:var(--teal);background:rgba(10,191,188,.1)}
+.qopt.right{border-color:var(--lime);background:rgba(200,241,53,.1);color:var(--lime)}
+.qopt.wrong{border-color:var(--pink);background:rgba(255,77,139,.1);color:var(--pink)}
+.qopt:disabled{cursor:not-allowed}
+.qfb{font-size:.88rem;padding:.8rem 1rem;border-radius:10px;margin-top:.6rem;display:none;line-height:1.6}
+.qfb.show.ok{display:block;background:rgba(200,241,53,.08);color:var(--lime)}
+.qfb.show.no{display:block;background:rgba(255,77,139,.08);color:var(--pink)}
+.qnext{margin-top:.8rem;display:none}
+.qnext.show{display:inline-flex}
+.qscore{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--lime);text-align:center;
+  margin-top:1.2rem;display:none;line-height:1.4}
+
+/* HABIT TRACKER GAME */
+.habits-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:.7rem;margin:1rem 0}
+.habit-card{background:var(--card);border:1.5px solid var(--border);border-radius:14px;
+  padding:1rem;text-align:center;cursor:pointer;transition:all .22s;position:relative}
+.habit-card:hover{border-color:rgba(200,241,53,.3)}
+.habit-card.picked{border-color:var(--lime);background:rgba(200,241,53,.08)}
+.habit-card .hico{font-size:1.8rem;margin-bottom:.5rem}
+.habit-card .hname{font-size:.8rem;font-weight:700;line-height:1.3}
+.habit-card .check{position:absolute;top:.5rem;right:.5rem;font-size:.9rem;opacity:0;transition:opacity .2s}
+.habit-card.picked .check{opacity:1}
+.habit-result{background:rgba(10,191,188,.08);border:1px solid rgba(10,191,188,.25);
+  border-radius:14px;padding:1.2rem 1.5rem;margin-top:1rem;display:none;line-height:1.7;font-size:.9rem}
+.habit-result.show{display:block}
+.habit-count{font-family:'Fraunces',serif;font-size:1.4rem;color:var(--teal);margin-bottom:.3rem}
+
+/* FINAL */
+.final{min-height:80vh;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;text-align:center;padding:4rem 2rem;max-width:700px;margin:0 auto}
+.trophy{font-size:4rem;animation:bounce2 1.5s ease infinite;margin-bottom:1rem}
+.cert{background:linear-gradient(135deg,rgba(200,241,53,.08),rgba(255,122,26,.06));
+  border:1.5px solid rgba(200,241,53,.25);border-radius:20px;padding:2rem;margin:2rem 0;width:100%}
+.cert-sub{font-size:.68rem;font-weight:800;letter-spacing:.25em;color:var(--muted);margin-bottom:.5rem}
+.cert-name{font-family:'Fraunces',serif;font-size:1.6rem;color:var(--lime);margin:.5rem 0}
+.cert p{font-size:.92rem;line-height:1.7;color:rgba(240,237,230,.75)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(28px);transition:all .65s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+<div class="progress-bar" id="pgbar"></div>
+
+<nav class="sidenav" id="sn">
+  <button class="sndot on" onclick="gto(0)"></button>
+  <button class="sndot" onclick="gto(1)"></button>
+  <button class="sndot" onclick="gto(2)"></button>
+  <button class="sndot" onclick="gto(3)"></button>
+  <button class="sndot" onclick="gto(4)"></button>
+  <button class="sndot" onclick="gto(5)"></button>
+  <button class="sndot" onclick="gto(6)"></button>
+</nav>
+
+<!-- ░░ HERO ░░ -->
+<div class="hero" id="s0">
+  <div class="blob blob1"></div>
+  <div class="blob blob2"></div>
+  <div class="tag">🌞 ОНЛАЙН-УРОК · 9 КЛАС · ДЛЯ УЧНЯ</div>
+  <h1 class="hero-title">Плануй <span class="acc">літо</span><br>як <span class="acc2">профі</span></h1>
+  <p class="hero-sub">90 днів. Тисячі можливостей.<br>Один вибір — що з ними робити.</p>
+  <div class="hero-pills">
+    <span class="pill">⏱ 40 хвилин</span>
+    <span class="pill">🎮 4 активності</span>
+    <span class="pill">🧩 вікторина</span>
+    <span class="pill">📅 місячний план</span>
+  </div>
+  <div class="scroll-arrow">↓</div>
+</div>
+
+<div class="div"></div>
+
+<!-- ░░ 1 ЧОМУ ВАЖЛИВО ░░ -->
+<section class="sec reveal" id="s1">
+  <div class="stag">Частина 1 · Старт думки</div>
+  <h2>Навіщо взагалі<br><span class="hl">щось планувати?</span></h2>
+  <p class="lead">Літо — це не порожнеча між двома роками. Це твій найкращий шанс вирости, дізнатися себе і зробити те, на що зазвичай «немає часу». Але без орієнтира навіть 90 вільних днів зникають, як вода крізь пальці.</p>
+
+  <div class="tbox">
+    <p>Давайте разом поміркуємо: якщо щодня витрачати лише 1 годину на щось нове — за літо це 90 годин практики. Це приблизно стільки ж, скільки займає базовий університетський курс. Одна година щодня — і ти опанував нову навичку.</p>
+    <div class="who">👩‍🏫 Вчитель · Мотиваційний вступ</div>
+  </div>
+
+  <div class="cards">
+    <div class="card"><div class="ico">🚀</div><h3>Зростання</h3><p>Нові знання та навички, які не вкладаються в шкільну програму.</p></div>
+    <div class="card"><div class="ico">🎯</div><h3>Фокус</h3><p>Цілі дають напрямок. З ними кожен день має сенс.</p></div>
+    <div class="card"><div class="ico">😴</div><h3>Відпочинок</h3><p>Якісний відпочинок — теж частина плану. Без нього немає енергії.</p></div>
+    <div class="card"><div class="ico">🌐</div><h3>Досвід</h3><p>Живий досвід — подорожі, люди, проєкти — формує особистість.</p></div>
+  </div>
+
+  <div class="pbox">
+    <p>У 14–15 років мозок особливо пластичний: нові нейронні зв'язки формуються швидше, ніж у будь-який інший period дорослого життя. Те, чим ти займаєшся зараз, буквально «будує» твій мозок. Літо — унікальне вікно.</p>
+    <div class="who">🧠 Психолог · Про нейропластичність</div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ░░ 2 ГРА: СОРТУВАННЯ ░░ -->
+<section class="sec reveal" id="s2">
+  <div class="stag">Частина 2 · Гра</div>
+  <h2>🃏 Корисне чи <span class="hl2">марне?</span></h2>
+  <p class="lead">Перетягни кожну активність у правильну категорію. Є хитрі варіанти — думай уважно!</p>
+
+  <div class="abox">
+    <div class="abox-title">🎮 Активність: Сортування активностей</div>
+    <div class="abox-desc">Перетягни картку з нижньої зони у «Корисне літо» або «Марнування часу». Деякі відповіді вас здивують!</div>
+
+    <div style="margin-bottom:.6rem;font-size:.8rem;color:var(--muted)">Картки для сортування:</div>
+    <div class="esort-pool" id="sortPool"></div>
+
+    <div class="esort-zones">
+      <div class="zone good" id="z-good" ondragover="ev.preventDefault()" ondrop="drop(event,'good')">
+        <div class="zone-label">✅ КОРИСНЕ ЛІТО</div>
+        <div class="zone-items" id="zi-good"></div>
+      </div>
+      <div class="zone bad" id="z-bad" ondragover="ev.preventDefault()" ondrop="drop(event,'bad')">
+        <div class="zone-label">❌ МАРНУВАННЯ ЧАСУ</div>
+        <div class="zone-items" id="zi-bad"></div>
+      </div>
+    </div>
+    <button class="btn btn-lime" onclick="checkSort()">Перевірити ✓</button>
+    <div class="sort-result" id="sortRes"></div>
+  </div>
+
+  <div class="pbox" style="margin-top:1.8rem">
+    <p>Зверніть увагу: ігри, соцмережі чи серіали — не завжди «марнування». Проблема не в активності, а в кількості й усвідомленості. 30 хвилин гри після продуктивного дня — відновлення. 8 годин гри замість усього іншого — звичка уникання.</p>
+    <div class="who">🧠 Психолог · Про здоровий баланс</div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ░░ 3 МІСЯЧНИЙ ПЛАН ░░ -->
+<section class="sec reveal" id="s3">
+  <div class="stag">Частина 3 · Планування</div>
+  <h2>📅 Твій <span class="hl">літній план</span><br>по тижнях</h2>
+  <p class="lead">Розгорни кожен місяць — і дізнайся, що можна встигнути! Це не жорсткий розклад, а орієнтир. Натискай на місяць 👇</p>
+
+  <div class="tbox">
+    <p>Коли учні запитують: «А якщо я не встигну виконати план?» — я відповідаю: план — це не клітка, це компас. Головне не те, щоб все виконати ідеально, а те, щоб мати напрямок. З компасом ти повернешся на шлях навіть якщо збився.</p>
+    <div class="who">👩‍🏫 Вчитель · Про гнучкість у плануванні</div>
+  </div>
+
+  <div class="smap" id="smap">
+    <!-- Months rendered by JS -->
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ░░ 4 ЗВИЧКИ ░░ -->
+<section class="sec reveal" id="s4">
+  <div class="stag">Частина 4 · Активність</div>
+  <h2>🌱 Обери свої <span class="hl2">літні звички</span></h2>
+  <p class="lead">Вибери 3–5 звичок, які хочеш закріпити за літо. Після вибору дізнаєшся, що про це каже наука!</p>
+
+  <div class="abox">
+    <div class="abox-title">☑️ Активність: Конструктор звичок</div>
+    <div class="abox-desc">Клікай на звички, щоб обрати (3–5 штук), потім натисни «Мій план звичок».</div>
+    <div class="habits-grid" id="habitsGrid"></div>
+    <button class="btn btn-teal" onclick="showHabits()" style="margin-top:.5rem">Мій план звичок →</button>
+    <div class="habit-result" id="habitRes">
+      <div class="habit-count" id="habitCount"></div>
+      <div id="habitText"></div>
+    </div>
+  </div>
+
+  <div class="pbox" style="margin-top:1.8rem">
+    <p>Дослідження Університетського коледжу Лондону показують: нова звичка в середньому формується за 66 днів — а не 21, як часто кажуть. За літо (90 днів) ти повністю закріпиш дві нові звички, якщо починатимеш у червні.</p>
+    <div class="who">🧠 Психолог · Про формування звичок</div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ░░ 5 ВІКТОРИНА ░░ -->
+<section class="sec reveal" id="s5">
+  <div class="stag">Частина 5 · Вікторина</div>
+  <h2>🧩 Перевір знання:<br><span class="hl">7 запитань</span></h2>
+  <p class="lead">Кожна правильна відповідь — +1 бал. Готовий?</p>
+
+  <div class="abox">
+    <div class="abox-title">❓ Вікторина</div>
+    <div class="abox-desc">Вибирай відповідь — і одразу побачиш пояснення. Зароби максимальний бал!</div>
+    <div class="qprog" id="qp">Питання 1 з 7</div>
+    <div class="qq" id="qq"></div>
+    <div class="qopts" id="qo"></div>
+    <div class="qfb" id="qf"></div>
+    <button class="btn btn-teal qnext" id="qn" onclick="qnext()">Далі →</button>
+    <div class="qscore" id="qs"></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ░░ 6 ТЕСТ «ЯКИй ТИ ЛІТНІЙ ТИП» ░░ -->
+<section class="sec reveal" id="s6">
+  <div class="stag">Частина 6 · Тест</div>
+  <h2>🔍 Який ти <span class="hl2">літній тип?</span></h2>
+  <p class="lead">Відповідай на 4 запитання і дізнайся свій стиль літнього відпочинку та поради спеціально для тебе!</p>
+
+  <div class="abox" id="typeTestBox">
+    <div class="abox-title">🎨 Тест особистості</div>
+    <div class="abox-desc" id="ttDesc">Відповідай чесно — немає правильних чи неправильних відповідей.</div>
+    <div id="ttBody"></div>
+  </div>
+</section>
+
+<div class="div"></div>
+
+<!-- ░░ FINAL ░░ -->
+<div class="final reveal" id="sfin">
+  <div class="trophy">🏆</div>
+  <div class="stag" style="text-align:center">Урок завершено!</div>
+  <h2 style="text-align:center">Ти готовий до<br><span class="hl">найкращого літа</span></h2>
+  <p class="lead" style="text-align:center">Пройшов усі активності, вікторину, тест і склав план. Це вже крок уперед!</p>
+  <div class="cert">
+    <div class="cert-sub">🌞 СЕРТИФІКАТ УЧАСНИКА</div>
+    <p>Учень успішно завершив урок</p>
+    <div class="cert-name">«Плануй літо як профі»</div>
+    <p>і готовий перетворити 90 днів канікул на 90 кроків назустріч мрії</p>
+  </div>
+  <div class="tbox">
+    <p>Запам'ятай одне правило: не потрібен ідеальний план. Потрібен твій план. Починай з малого — навіть одна нова звичка цього літа змінить твій наступний рік.</p>
+    <div class="who">👩‍🏫 Вчитель · Фінальне слово</div>
+  </div>
+</div>
+
+<script>
+// SCROLL
+window.addEventListener('scroll',()=>{
+  const h=document.documentElement;
+  const pct=(h.scrollTop/(h.scrollHeight-h.clientHeight))*100;
+  document.getElementById('pgbar').style.width=pct+'%';
+  const ids=['s0','s1','s2','s3','s4','s5','s6','sfin'];
+  const dots=document.querySelectorAll('.sndot');
+  ids.forEach((id,i)=>{
+    const el=document.getElementById(id);if(!el)return;
+    const r=el.getBoundingClientRect();
+    if(r.top<=window.innerHeight*.6&&r.bottom>=window.innerHeight*.4){
+      dots.forEach(d=>d.classList.remove('on'));
+      if(dots[i])dots[i].classList.add('on');
+    }
+  });
+});
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.1});
+document.querySelectorAll('.reveal').forEach(r=>ro.observe(r));
+function gto(i){const ids=['s0','s1','s2','s3','s4','s5','s6','sfin'];document.getElementById(ids[i])?.scrollIntoView({behavior:'smooth'})}
+
+// ===== SORT GAME =====
+const sortData=[
+  {id:'s1',label:'📚 Читати книги',cat:'good'},
+  {id:'s2',label:'🏃 Ранкові пробіжки',cat:'good'},
+  {id:'s3',label:'📱 8 год. TikTok щодня',cat:'bad'},
+  {id:'s4',label:'🎨 Малювати/творити',cat:'good'},
+  {id:'s5',label:'🎮 2 год. гри в день',cat:'good'},// surprise!
+  {id:'s6',label:'🌱 Волонтерство',cat:'good'},
+  {id:'s7',label:'😴 Спати до 14:00 щодня',cat:'bad'},
+  {id:'s8',label:'🗣️ Вивчати мову',cat:'good'},
+  {id:'s9',label:'🛋️ Весь день серіали',cat:'bad'},
+  {id:'s10',label:'🚴 Велопрогулянки',cat:'good'},
+];
+const sortedMap={};
+function renderSort(){
+  const pool=document.getElementById('sortPool');
+  pool.innerHTML='';
+  sortData.forEach(item=>{
+    if(sortedMap[item.id])return;
+    const d=document.createElement('div');
+    d.className='sort-item';d.textContent=item.label;
+    d.draggable=true;d.dataset.id=item.id;
+    d.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',item.id));
+    pool.appendChild(d);
+  });
+}
+function drop(e,zone){
+  e.preventDefault();
+  const id=e.dataTransfer.getData('text/plain');
+  sortedMap[id]=zone;
+  renderSort();
+  const cont=document.getElementById('zi-'+zone);
+  const item=sortData.find(x=>x.id===id);
+  const d=document.createElement('div');
+  d.className='sort-item placed';d.textContent=item.label;d.dataset.id=id;
+  d.draggable=true;
+  d.addEventListener('dragstart',ev=>{ev.dataTransfer.setData('text/plain',id);delete sortedMap[id];d.remove();renderSort();});
+  cont.appendChild(d);
+}
+function checkSort(){
+  let correct=0,surprises=[];
+  sortData.forEach(item=>{
+    if(!sortedMap[item.id])return;
+    if(sortedMap[item.id]===item.cat)correct++;
+    if(item.id==='s5'&&sortedMap[item.id]==='bad')surprises.push('🎮 2 год. гри в день — це НЕ марнування! Помірні ігри розвивають реакцію, логіку та стратегічне мислення.');
+  });
+  const total=Object.keys(sortedMap).length;
+  const res=document.getElementById('sortRes');
+  res.className='sort-result show';
+  res.innerHTML=`✅ Правильно ${correct} з ${total} розміщених.<br>${surprises.length?'<br>💡 <strong>Сюрприз:</strong> '+surprises.join('<br>'):''}
+  <br><br><strong>Ключ:</strong> 2 год. ігор — корисно (розвиток). 8 год. TikTok, сон до 14:00 щодня, цілий день серіали — марнування через відсутність балансу.`;
+}
+renderSort();
+// prevent default for drag zones
+document.querySelectorAll('.zone').forEach(z=>{z.addEventListener('dragover',e=>e.preventDefault())});
+
+// ===== SUMMER MAP =====
+const months=[
+  {ico:'🌿',name:'ЧЕРВЕНЬ',hint:'Перезавантаження',color:'#C8F135',cls:'w-june',weeks:[
+    {w:'Тиж 1',text:'Відпочинь, висипся, "відключися" від школи — це теж важлива задача'},
+    {w:'Тиж 2',text:'Обери 1–2 цілі на літо, запиши їх, розкажи другу'},
+    {w:'Тиж 3',text:'Почни одну нову звичку (ранкова зарядка, читання 20 хв, щоденник)'},
+    {w:'Тиж 4',text:'Спробуй нову активність: волонтерство, майстер-клас, похід'},
+  ]},
+  {ico:'☀️',name:'ЛИПЕНЬ',hint:'Активний розвиток',color:'#FF7A1A',cls:'w-july',weeks:[
+    {w:'Тиж 1',text:'Пройди перший онлайн-курс або прочитай перші 2 книги'},
+    {w:'Тиж 2',text:'Зроби щось творче: сфотографуй серію, зліпи, намалюй проєкт'},
+    {w:'Тиж 3',text:'Подорожуй або досліджуй рідне місто — знайди 5 нових місць'},
+    {w:'Тиж 4',text:'Середина літа: подивися, чи рухаєшся до своїх цілей'},
+  ]},
+  {ico:'🌊',name:'СЕРПЕНЬ',hint:'Закріплення та підготовка',color:'#0ABFBC',cls:'w-aug',weeks:[
+    {w:'Тиж 1',text:'Завершуй розпочате: добий курс, книгу, проєкт'},
+    {w:'Тиж 2',text:'Зустрінься з друзями, поділись тим, чого навчився цього літа'},
+    {w:'Тиж 3',text:'Підготуйся до нового навчального року: матеріали, режим сну'},
+    {w:'Тиж 4',text:'Запиши 10 речей, які відбулися цього літа. Це твій літопис зростання'},
+  ]},
+];
+const smapEl=document.getElementById('smap');
+months.forEach((m,i)=>{
+  const div=document.createElement('div');div.className='smap-month';
+  div.innerHTML=`<div class="smap-head" onclick="toggleM(${i})">
+    <span class="mico">${m.ico}</span>
+    <span class="mname" style="color:${m.color}">${m.name}</span>
+    <span class="mhint">${m.hint} ▾</span>
+  </div>
+  <div class="smap-body" id="mb${i}">
+    ${m.weeks.map(w=>`<div class="week-row"><span class="week-badge ${m.cls}">${w.w}</span> ${w.text}</div>`).join('')}
+  </div>`;
+  smapEl.appendChild(div);
+});
+function toggleM(i){const b=document.getElementById('mb'+i);b.classList.toggle('open')}
+
+// ===== HABITS =====
+const habitsData=[
+  {ico:'🌅',name:'Ранній підйом'},
+  {ico:'🏃',name:'Зарядка'},
+  {ico:'📖',name:'Читання'},
+  {ico:'💧',name:'2л води'},
+  {ico:'📝',name:'Щоденник'},
+  {ico:'🎸',name:'Інструмент'},
+  {ico:'🗣️',name:'Іноземна мова'},
+  {ico:'🧘',name:'Медитація'},
+  {ico:'🚶',name:'Прогулянка'},
+  {ico:'💻',name:'Навчання онлайн'},
+  {ico:'🎨',name:'Творчість'},
+  {ico:'🍎',name:'Здорове харчування'},
+];
+const pickedH=new Set();
+function renderHabits(){
+  const g=document.getElementById('habitsGrid');g.innerHTML='';
+  habitsData.forEach(h=>{
+    const d=document.createElement('div');d.className='habit-card'+(pickedH.has(h.name)?' picked':'');
+    d.innerHTML=`<div class="hico">${h.ico}</div><div class="hname">${h.name}</div><div class="check">✅</div>`;
+    d.onclick=()=>{if(pickedH.has(h.name))pickedH.delete(h.name);else pickedH.add(h.name);renderHabits()};
+    g.appendChild(d);
+  });
+}
+renderHabits();
+function showHabits(){
+  if(pickedH.size<3){alert('Обери щонайменше 3 звички!');return;}
+  const res=document.getElementById('habitRes');
+  const list=[...pickedH];
+  document.getElementById('habitCount').textContent=`Обрано ${list.length} звичок 💪`;
+  document.getElementById('habitText').innerHTML=
+    `<strong>Твій план:</strong><br>${list.map(h=>`• ${h} — щодня хоча б 15 хвилин`).join('<br>')}
+    <br><br>💡 <strong>Порада:</strong> прив'яжи нову звичку до вже існуючої. Наприклад: «Після сніданку — 20 хвилин читання». Це «habit stacking» — найефективніший метод закріплення звичок.`;
+  res.className='habit-result show';
+}
+
+// ===== QUIZ =====
+const qs=[
+  {q:'За скільки днів у середньому формується нова звичка?',o:['21 день','30 днів','66 днів','100 днів'],a:2,e:'✅ Вірно! Дослідження UCL: середній час — 66 днів. Міф про 21 день пішов з книги 1960-х без наукового підґрунтя.'},
+  {q:'Що таке "habit stacking"?',o:['Ведення списку справ','Прив\'язка нової звички до існуючої','Метод поетапного читання','Техніка медитації'],a:1,e:'✅ Правильно! Habit stacking — прив\'язка нової звички до вже наявної. Наприклад: «Після кави — 5 хвилин розтяжки».'},
+  {q:'Скільки годин вільного часу дає літо (90 днів по 16 год без сну)?',o:['720 год','1440 год','2160 год','900 год'],a:1,e:'✅ 90 × 16 = 1440 годин. За цей час можна пройти 10+ онлайн-курсів або прочитати 20+ книг.'},
+  {q:'Яка активність НЕ є «пасивним відпочинком»?',o:['Перегляд серіалів','Скролінг стрічки','Малювання','Лежати та нічого не робити'],a:2,e:'✅ Правильно! Малювання — активна творча дія, яка задіює мозок, руки і емоції. Це відновлення через творення.'},
+  {q:'Що таке нейропластичність?',o:['Страх перед новим','Здатність мозку змінюватися і формувати нові зв\'язки','Тип пам\'яті для чисел','Метод вивчення мов'],a:1,e:'✅ Нейропластичність — це те, що робить навчання можливим. Ваш мозок буквально змінює свою структуру, коли ви вчитесь.'},
+  {q:'Яка з наступних цілей є SMART-ціллю?',o:['Хочу навчитися малювати','Хочу бути спортивним','До 31 серпня пробігати 5 км без зупинки, тренуючись 3 рази/тиждень','Займатися більше цього літа'],a:2,e:'✅ Вірно! Тільки третій варіант конкретний, вимірюваний, досяжний, релевантний і обмежений у часі.'},
+  {q:'Що дає волонтерство підліткам, крім корисної справи?',o:['Тільки запис у резюме','Відчуття сенсу, соціальні навички, зниження тривожності','Нічого особливого','Лише нові знайомства'],a:1,e:'✅ Правильно! Численні дослідження показують: волонтерство підвищує самооцінку, формує емпатію і дає відчуття власної цінності.'},
+];
+let qi=0,sc=0,qa=false;
+function renderQ(){
+  const q=qs[qi];
+  document.getElementById('qp').textContent=`Питання ${qi+1} з ${qs.length}`;
+  document.getElementById('qq').textContent=q.q;
+  const c=document.getElementById('qo');c.innerHTML='';
+  q.o.forEach((o,i)=>{
+    const b=document.createElement('button');b.className='qopt';b.textContent=o;
+    b.onclick=()=>ansQ(i);c.appendChild(b);
+  });
+  document.getElementById('qf').className='qfb';document.getElementById('qf').textContent='';
+  document.getElementById('qn').className='btn btn-teal qnext';
+  qa=false;
+}
+function ansQ(i){
+  if(qa)return;qa=true;
+  const q=qs[qi];
+  const bs=document.querySelectorAll('.qopt');bs.forEach(b=>b.disabled=true);
+  const fb=document.getElementById('qf');
+  if(i===q.a){bs[i].classList.add('right');fb.className='qfb show ok';fb.textContent=q.e;sc++;}
+  else{bs[i].classList.add('wrong');bs[q.a].classList.add('right');fb.className='qfb show no';fb.textContent='❌ Не зовсім. '+q.e;}
+  document.getElementById('qn').className='btn btn-teal qnext show';
+}
+function qnext(){
+  qi++;
+  if(qi<qs.length){renderQ();return;}
+  document.getElementById('qq').textContent='';
+  document.getElementById('qo').innerHTML='';
+  document.getElementById('qf').className='qfb';
+  document.getElementById('qn').className='btn btn-teal qnext';
+  document.getElementById('qp').textContent='✅ Вікторину завершено!';
+  const s=document.getElementById('qs');s.style.display='block';
+  const msgs=['Є куди рости! 💪','Непогано — ти на шляху 🌱','Добре! Продовжуй вчитися 📚','Чудово! Ти уважний учень 🌟','Ідеально! Ти справжній експерт літнього планування 🏆'];
+  s.textContent=`Результат: ${sc}/${qs.length} — ${msgs[Math.min(Math.floor(sc/(qs.length/msgs.length)),4)]}`;
+}
+renderQ();
+
+// ===== TYPE TEST =====
+const ttQ=[
+  {q:'У перший день канікул ти найперше...',o:['Засинаю без будильника','Телефоную другу домовитись зустрітись','Відкриваю ноутбук і починаю щось цікаве','Іду на вулицю / на природу'],vals:['R','S','L','A']},
+  {q:'Ідеальний день для тебе — це...',o:['Тихо вдома, книга, чай, нікого','Компанія, сміх, нові місця','Навчитися чомусь новому або зробити проєкт','Спорт, рух, свіже повітря'],vals:['R','S','L','A']},
+  {q:'Найбільша цінність літа для тебе?',o:['Відпочинок і відновлення','Нові знайомства і враження','Розвиток і навички','Пригоди і фізична активність'],vals:['R','S','L','A']},
+  {q:'Ти вже зробив(ла) щось продуктивне. Тобі хочеться...',o:['Винагородити себе і розслабитись','Поділитись з кимось','Зробити ще більше','Вийти кудись відпочити активно'],vals:['R','S','L','A']},
+];
+const ttTypes={
+  R:{title:'😌 Відновлювач',desc:'Твоє літо — це перезавантаження. Ти відновлюєш сили тихо й усвідомлено. Для тебе важливо: якісний сон, тиша, читання, природа. Порада: додай 1 невелику ціль — щоб серпень не здався порожнім.',color:'#0ABFBC'},
+  S:{title:'🤝 Соціальний дослідник',desc:'Для тебе літо — це люди і враження. Ти заряджаєшся від спілкування та нових місць. Порада: спробуй волонтерство або табір — там і люди, і зростання одночасно.',color:'#FF4D8B'},
+  L:{title:'🧠 Вічний учень',desc:'Ти — людина-проєкт. Тебе надихає освоювати нове. Порада: щоб не вигоріти, плануй відпочинок так само ретельно, як навчання. Без перезавантаження мозок не засвоює нове.',color:'#C8F135'},
+  A:{title:'🏄 Активний мандрівник',desc:'Ти живеш у русі. Спорт, природа, пригоди — це твоя стихія. Порада: додай до активного літа одну інтелектуальну звичку — подкаст, книга, курс. Тіло і розум разом дають найкращий результат.',color:'#FF7A1A'},
+};
+let ttIdx=0,ttScores={R:0,S:0,L:0,A:0};
+function renderTT(){
+  const b=document.getElementById('ttBody');
+  if(ttIdx>=ttQ.length){
+    // result
+    const top=Object.entries(ttScores).sort((a,b)=>b[1]-a[1])[0][0];
+    const t=ttTypes[top];
+    b.innerHTML=`<div style="background:rgba(255,255,255,.04);border:1.5px solid ${t.color}33;border-radius:16px;padding:1.5rem;margin-top:.5rem">
+      <div style="font-family:'Fraunces',serif;font-size:1.5rem;color:${t.color};margin-bottom:.6rem">${t.title}</div>
+      <p style="font-size:.92rem;line-height:1.7;color:var(--muted)">${t.desc}</p>
+    </div>`;
+    document.getElementById('ttDesc').textContent='Ось твій тип! 🎉';
+    return;
+  }
+  const q=ttQ[ttIdx];
+  b.innerHTML=`<div class="qq" style="margin-bottom:1rem">${q.q}</div>
+  <div class="qopts">${q.o.map((o,i)=>`<button class="qopt" onclick="ttAns(${i})">${o}</button>`).join('')}</div>`;
+}
+function ttAns(i){
+  ttScores[ttQ[ttIdx].vals[i]]++;
+  ttIdx++;renderTT();
+}
+renderTT();
+</script>
+</body>
+</html>
